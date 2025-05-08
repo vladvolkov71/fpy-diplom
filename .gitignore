@@ -1,0 +1,29 @@
+__pycache__/
+storage/*
+!storage/.gitkeep
+.venv
+/static/*
+template.txt
+
+# Frontend
+frontend/.idea
+frontend/node_modules/
+frontend/static/frontend/*
+
+
+# testing
+coverage/
+
+# production
+build/
+
+# misc
+.DS_Store
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+#VSCode
+
+.vscode
+.idea
