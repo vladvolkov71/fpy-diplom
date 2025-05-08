@@ -83,7 +83,7 @@ function SignUpForm() {
   return (
     <>
       <form className="form" onSubmit={onSubmitHandler}>
-        <h2 className="form--title">Sign Up</h2>
+        <h2 className="form--title">Регистрация</h2>
         {page === 1
           ? (
             <>
@@ -96,8 +96,8 @@ function SignUpForm() {
           )
           : (
             <>
-              <input type="text" placeholder="first name" ref={firstName} />
-              <input type="text" placeholder="last name" ref={lastName} />
+              <input type="text" placeholder="Фамилия" ref={firstName} />
+              <input type="text" placeholder="Имя" ref={lastName} />
               <input type="submit" value="OK" />
             </>
           )}

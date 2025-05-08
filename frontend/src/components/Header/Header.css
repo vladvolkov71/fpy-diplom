@@ -26,7 +26,11 @@
   font-size: 1.5em;
   cursor: pointer;
 }
+.header--menu-container--item {
+  margin-left: 5px;
+  margin-right: 5px;
 
+}
 .header--menu-container--item:hover {
   color: #022a80;
   transition: all 500ms;

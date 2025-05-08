@@ -54,7 +54,7 @@ function SignInForm() {
   return (
     <>
       <form className="form" onSubmit={onSubmitHandler}>
-        <h2 className="form--title">Sign In</h2>
+        <h2 className="form--title">Вход</h2>
         <input type="email" ref={email} placeholder="email" required />
         <input type="password" ref={password} placeholder="password" required />
         <input type="submit" value="OK" required />

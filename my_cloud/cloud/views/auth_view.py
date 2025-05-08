@@ -33,7 +33,7 @@ def login_view(request):
     
     return JsonResponse(
         {
-        "message": "invalid credentials"
+        "message": "Неверное имя или пароль"
         }, status=400
     )
 

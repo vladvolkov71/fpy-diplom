@@ -38,7 +38,7 @@ function FileInput({ sendFile }) {
               : null }
           </div>
           { fileChosen && fileChosen.length
-            ? <input type="submit" value="send" />
+            ? <input type="submit" value="Send" />
             : null }
         </form>
       )

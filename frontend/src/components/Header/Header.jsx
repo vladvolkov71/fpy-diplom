@@ -46,8 +46,7 @@ function Header() {
               </div>
             </>
           )
-          : <Username username={username} />
-        }
+          : <Username username={username} />}
       </div>
 
       <div className="header--menu-container">
@@ -60,7 +59,7 @@ function Header() {
                 <Link
                   to="/admin"
                 >
-                  AdminPanel
+                  Admin
                 </Link>
               </div>
               <div

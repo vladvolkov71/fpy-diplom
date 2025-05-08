@@ -4,14 +4,14 @@ const validateUsername = (username) => {
   if (!usernamePattern.test(username)) {
     return {
       ok: false,
-      message: 'Username can include only latin characters and numbers',
+      message: 'Имя должно состоять из латинских букв и цифр',
     };
   }
 
   if (username.length < 4 || username.length > 20) {
     return {
       ok: false,
-      message: 'Username must be between 4 and 20 characters long',
+      message: 'Имя должно быть длинной от 4 до 20 символов',
     };
   }
 
@@ -27,28 +27,28 @@ const validatePassword = (password) => {
   if (password.length < 6) {
     return {
       ok: false,
-      message: 'Password length should be 6 symbols or more',
+      message: 'Длинна пароля должна быть больше 6 символов',
     };
   }
 
   if (password === password.toLowerCase()) {
     return {
       ok: false,
-      message: 'Password should contains uppercase letter',
+      message: 'Пароль должен содержать заглавные буквы',
     };
   }
 
   if (!numberPattern.test(password)) {
     return {
       ok: false,
-      message: 'Password should contains number',
+      message: 'Пароль должен содержать цифры',
     };
   }
 
   if (!specialLettersPattern.test(password)) {
     return {
       ok: false,
-      message: 'Password should contains special character',
+      message: 'Пароль должен содержать спецсимволы',
     };
   }
 
