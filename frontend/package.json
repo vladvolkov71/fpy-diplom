@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack start",
     "dev": "webpack --mode development ./src/index.jsx --output-path ./static/frontend/",
     "build": "webpack --mode production ./src/index.jsx --output-path ./static/frontend/",
     "lint": "eslint ."

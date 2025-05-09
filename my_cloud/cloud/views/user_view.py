@@ -57,9 +57,9 @@ def delete_user(request, user_id):
         user.delete()
 
         return JsonResponse({
-            "message": "success",
+            "message": "Успешно",
         })
     
     return JsonResponse({
-        "message": 'User not found',
+        "message": 'Пользователь не найден',
     }, status=404)

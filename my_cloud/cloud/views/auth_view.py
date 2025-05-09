@@ -19,7 +19,7 @@ def login_view(request):
 
     if email is None or password is None:
         return JsonResponse({
-            "message": "Please enter both email and password"
+            "message": "Пожалуйста, введите email и пароль."
         }, status=400)
 
     user = authenticate(email=email, password=password)
@@ -28,7 +28,7 @@ def login_view(request):
         login(request, user)
 
         return JsonResponse({
-            "message": "success",
+            "message": "Успешно",
         })
     
     return JsonResponse(
@@ -42,7 +42,7 @@ def logout_view(request):
     logout(request)
     
     return JsonResponse({
-        "message": 'logout',
+        "message": 'Выход',
     })
 
 

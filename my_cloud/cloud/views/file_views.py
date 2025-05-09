@@ -40,7 +40,7 @@ class FileView(APIView):
             return FileResponse(file.file, status.HTTP_200_OK, as_attachment=True)
 
         data = {
-                'message': 'The file not found',
+                'message': 'Файл не найден',
             }
         
         return Response(data, status=status.HTTP_404_NOT_FOUND)
@@ -144,7 +144,7 @@ class FileView(APIView):
             return Response(data, status.HTTP_200_OK)
 
         data = {
-            'message': 'The file not found',
+            'message': 'Файл не найден',
         }
         
         return Response(data, status.HTTP_404_NOT_FOUND)
