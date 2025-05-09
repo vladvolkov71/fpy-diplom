@@ -17,14 +17,14 @@ function UserStorage({ storageUserId }) {
       <span
         className="storage-user-id"
       >
-        {`User storage with ID ${storageUserId}`}
+        {`Это файлы пользователя ID ${storageUserId}`}
       </span>
       <button
         className="storage-user--exit-btn"
         type="button"
         onClick={onClickHandler}
       >
-        Leave storage
+        Вернуться к своим
       </button>
     </div>
   );

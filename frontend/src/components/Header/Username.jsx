@@ -51,7 +51,7 @@ function Username({ username }) {
           role="button"
           tabIndex={0}
         >
-          Log out
+          Выход
         </div>
       )
       : (
