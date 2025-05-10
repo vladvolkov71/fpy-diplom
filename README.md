@@ -1,8 +1,8 @@
 # Дипломный проект профессии «Fullstack-разработчик на Python»
 
-## ☁️ Облачное хранилище «My Cloud»
+## Облачное хранилище «My Cloud»
 
-## 🎰 Развертывание на сервере
+## Развертывание на сервере
 
 - коннектимся к серверу
 ```
@@ -28,8 +28,8 @@ $ sudo systemctl status nginx
 ```
 - клонируем репозиторий и заходим в него
 ```
-$ git clone https://github.com/Dimafdr/diplom.git
-$ cd cloud_storage
+$ git clone https://github.com/vladvolkov71/fpy-diplom.git
+$ cd fpy-diplom
 ```
 ### База данных
 - не забудем установить базу данных, используем пользователя `postgres`
@@ -37,9 +37,9 @@ $ cd cloud_storage
 $ sudo su postgres
 $ psql
 
-# CREATE DATABASE cloud_storage;
-# CREATE USER <username> WITH PASSWORD '<passowrd>';
-# GRANT ALL PRIVILEGES ON DATABASE cloud_storage TO <username>;
+# CREATE DATABASE Cloud_db4;
+# CREATE USER postgres WITH PASSWORD '1';
+# GRANT ALL PRIVILEGES ON DATABASE Cloud_db4 TO postgres;
 # \q
 
 $ exit
@@ -57,7 +57,7 @@ DB_PASSWORD // пароль для доступа к базе данных
 DB_HOST // хост базы данных (например: localhost)
 DB_PORT // порт базы данных (например: 5432)
 ```
-- создаем и активируем виртуалльное окружение
+- создаем и активируем виртуальное окружение
 ```
 $ python3 -m venv env
 $ source ./env/bin/activate
@@ -70,7 +70,7 @@ $ source ./env/bin/activate
 ```
 ### Фронтенд
 
-- Переходим в дирректорию `frontend/`, обновим Node и установим NPM зависимости
+- Переходим в директорию `frontend/`, обновим Node и установим NPM зависимости
 ```
 sudo npm cache clean -f
 sudo npm install -g n
