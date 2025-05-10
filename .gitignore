@@ -16,7 +16,7 @@ coverage/
 
 # production
 build/
-.env.prod
+.env
 
 # misc
 .DS_Store

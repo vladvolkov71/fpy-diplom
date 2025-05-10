@@ -58,8 +58,8 @@ DB_PORT // порт базы данных (например: 5432)
 ```
 - создаем и активируем виртуальное окружение
 ```
-$ python3 -m venv env
-$ source ./env/bin/activate
+$ python3 -m venv venv
+$ source ./venv/bin/activate
 ```
 - устанавливаем зависимости Python, применяем миграции и запускаем backend
 ```
@@ -101,8 +101,8 @@ After=network.target
 [Service]
 User=root
 Group=www-data
-WorkingDirectory=/home/vlad/fpy-diplom
-ExecStart=/home/vlad/fpy-diplom/env/bin/gunicorn \
+WorkingDirectory=/home/<unix_username>/fpy-diplom
+ExecStart=/home/<unix_username>/fpy-diplom/env/bin/gunicorn \
     --access-logfile - \
     --workers=3 \
     --bind unix:/home/vlad/fpy-diplom/my_cloud/gunicorn.sock my_cloud.wsgi:application
@@ -126,12 +126,12 @@ server {
 	server_name <server_IP>;
 
 	location /static/ {
-		root /home/vlad/fpy-diplom;
+		root /home/<unix_username>/fpy-diplom;
 	}
                 
 	location / {
         include proxy_params;
-        proxy_pass http://unix:/home/vlad/fpy-diplom/my_cloud/gunicorn.sock;
+        proxy_pass http://unix:/home/<unix_username>/fpy-diplom/my_cloud/gunicorn.sock;
     }
 	
 }
