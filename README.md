@@ -1,14 +1,14 @@
 # Дипломный проект профессии «Fullstack-разработчик на Python»
 
-## Облачное хранилище «My Cloud»
+## Облачное хранилище «Моё облако»
 
 ## Развертывание на сервере
 
-- коннектимся к серверу
+- Подключаемся к серверу под root
 ```
 $ ssh root@<IP сервера>
 ```
-- создаем юзера, даем ему права и коннектимся с ним
+- создаем пользователя, даем ему права и переключаемся на него
 ```
 $ adduser <unix_username>
 $ usermod <unix_username> -aG sudo
@@ -20,7 +20,6 @@ $ sudo apt update
 $ sudo apt upgrade
 $ sudo apt install python3-venv python3-pip postgresql nginx npm
 ```
-
 - проверяем, что Nginx запущен
 ```
 $ sudo systemctl start nginx
@@ -37,14 +36,14 @@ $ cd fpy-diplom
 $ sudo su postgres
 $ psql
 
-# CREATE DATABASE Cloud_db4;
-# CREATE USER postgres WITH PASSWORD '1';
-# GRANT ALL PRIVILEGES ON DATABASE Cloud_db4 TO postgres;
+# CREATE DATABASE <db_name>;
+# CREATE USER <username> WITH PASSWORD '<passowrd>';
+# GRANT ALL PRIVILEGES ON DATABASE <db_name> TO <username>;
 # \q
 
 $ exit
 ```
-### Бэкенд
+### Backend
 - создаем файл `.env` для указания переменных
 ```
 SECRET_KEY // секретный ключ django
@@ -62,13 +61,13 @@ DB_PORT // порт базы данных (например: 5432)
 $ python3 -m venv env
 $ source ./env/bin/activate
 ```
-- устанавливаем зависимости Python, применяем миграции и запускаем бэкенд
+- устанавливаем зависимости Python, применяем миграции и запускаем backend
 ```
 (env) $ pip install -r requirements.txt
-(env) $ python manage.py makemigrations cloud
+(env) $ python manage.py makemigrations
 (env) $ python manage.py migrate
 ```
-### Фронтенд
+### Frontend
 
 - Переходим в директорию `frontend/`, обновим Node и установим NPM зависимости
 ```
@@ -77,12 +76,12 @@ sudo npm install -g n
 sudo n stable
 npm install
 ```
-- В файле `frontend/src/api/requests.js` в переменной `BASE_URL` установим url, на который будут отправлятся запросы на сервер. Например: `http://127.0.0.1:8000/api/`
-После этого пересоберем бандл фронтенда
+- В файле `frontend/src/api/requests.js` в переменной `BASE_URL` установим url, на который будут отправляться запросы на сервер (внешний адрес сервера). Например: `http://127.0.0.1:8000/api/`
+После этого соберем проект в директории `frontend/`
 ```
 npm run dev
 ```
-- Себерем static файлы и запустим наш проект
+- Соберем static файлы и запустим наш проект
 ```
 (env) $ python manage.py collectstatic
 (env) $ python manage.py createsuperuser
@@ -102,11 +101,11 @@ After=network.target
 [Service]
 User=root
 Group=www-data
-WorkingDirectory=/home/<unix_username>/cloud_storage
-ExecStart=/home/<unix_username>/cloud_storage/env/bin/gunicorn \
+WorkingDirectory=/home/vlad/fpy-diplom
+ExecStart=/home/vlad/fpy-diplom/env/bin/gunicorn \
     --access-logfile - \
     --workers=3 \
-    --bind unix:/home/<unix_username>/cloud_storage/booking_cloud/gunicorn.sock booking_cloud.wsgi:application
+    --bind unix:/home/vlad/fpy-diplom/my_cloud/gunicorn.sock my_cloud.wsgi:application
 
 [Install]
 WantedBy=multi-user.target
@@ -118,7 +117,7 @@ WantedBy=multi-user.target
 ```
 - пишем конфиг Nginx
 ```
-(env) $ sudo nano /etc/nginx/sites-available/cloud_storage
+(env) $ sudo nano /etc/nginx/sites-available/fpy-diplom
 ```
 В файле пишем следующие настройки (вместо `<unix_username>` надо подставить ваше имя юзера):
 ```
@@ -127,19 +126,19 @@ server {
 	server_name <server_IP>;
 
 	location /static/ {
-		root /home/<unix_username>/cloud_storage;
+		root /home/vlad/fpy-diplom;
 	}
                 
 	location / {
         include proxy_params;
-        proxy_pass http://unix:/home/<unix_username>/cloud_storage/booking_cloud/gunicorn.sock;
+        proxy_pass http://unix:/home/vlad/fpy-diplom/my_cloud/gunicorn.sock;
     }
 	
 }
 ```
 - делаем ссылку на него
 ```
-(env) $ sudo ln -s /etc/nginx/sites-available/cloud_storage /etc/nginx/sites-enabled
+(env) $ sudo ln -s /etc/nginx/sites-available/fpy-diplom /etc/nginx/sites-enabled
 ```
 - открываем порты и даем права Nginx
 ```
@@ -158,7 +157,7 @@ server {
 (env) $ sudo systemctl restart gunicorn
 (env) $ sudo systemctl restart nginx
 ```
-Теперь Django проект должен быть доступен по http://<IP сервера> на обычном порту 80. Если видим ошибку 502, то, возможно, делло в правах и меняем существующего юзера на имя нашего юзера:
+Теперь Django проект должен быть доступен по http://<IP сервера> на обычном порту 80. Если видим ошибку 502, то, возможно, дело в правах и меняем существующего юзера на имя нашего юзера:
 ```
 (env) $ sudo nano /etc/nginx/nginx.conf
 ```
@@ -185,8 +184,8 @@ user <unix_username>
 ## Структура проекта
 Проект основан на Django и включает в себя два приложения:
 
-* booking_cloud - бэкенд часть проекта, реализованная на django rest framework
-* frontend - фронтенд часть проекта, которая реализована на react
+* my_cloud - backend часть проекта, реализованная на django rest framework
+* frontend - frontend часть проекта, которая реализована на react
 
 Связь фронденда с бекендом осуществляется через шаблон django, находящийся в директории `frontend/templates/frontend/index.html`.
 
@@ -196,35 +195,38 @@ user <unix_username>
 Создать администратора вы можете с помощью команды `python manage.py createsuperuser`. В проекте не используется стандартный административный раздел django.
 Авторизация под администратором происходит через общую форму авторизации для всех пользователей.
 
-> Зайти в административный раздел вы можете по ссылке `http://<адрес сайта>/admin/`. Обычным позователям доступ к разделу ограничен.
-
-Там есть список пользователей с их информацией. Вы можете удалить пользователя или изменить его статус (администратор/пользователь). 
-Список файлов других пользователей находится на главной странице.
-
 ### Регистрация в приложении
 
-Вы можете зарегистрироватся в приложении через форму регистрации, перейти к которой можно через шапку сайта (справа пункт меню Sign Up), или через конпку 
-"Try" на стартовой странице.
+Вы можете зарегистрироваться в приложении через форму регистрации, перейти к которой можно через шапку сайта - "Регистрация", или через кнопку 
+"Начать" на стартовой странице.
 
-Вход в личный кабинет осуществляется через шапку сайта - "Sign In". Для авторизации используются адрес электронной почты и пароль. 
+Вход в личный кабинет осуществляется через шапку сайта - "Войти". Для авторизации используются адрес электронной почты и пароль. 
 
 ## Основной функционал
 ### Добавление файла
-Добавить файл в хранилище вы можете через кнопку `Add` в нижнем правом углу. Добавление файлов осуществляется по одному.
+Добавить файл в хранилище вы можете через кнопку `Добавить` в нижнем правом углу. Добавление файлов осуществляется по одному.
 
 ### Удаление, переименование, загрузка файла. Комментарий
-Чтобы управлять файлом вы можете выделить его. После этого внизу появится панель для управления.
+Чтобы управлять файлом, вы можете выделить его. После этого внизу появится панель для управления.
 
-**rename** - переименовать файл.
+**Переименовать** - переименовать файл.
 
-**change comment** - добавить или изменить комментарий.
+**Изменить комментарий** - добавить или изменить комментарий.
 
-**download** - загрузить файл.
+**Скачать** - загрузить файл.
 
-**get download link** - получение ссылки для скачивания файла третьими лицами. Ссылку можно передать другу, знакомому, коллеге. 
+**Ссылка для скачивания** - получение ссылки для скачивания файла третьими лицами. Ссылку можно передать другу, знакомому, коллеге. 
 Они могут по ней скачать файл без регистрации.
 
-**delete** - удалить файл.
+**Удалить** - удалить файл.
 
+### Переключение между режимами работы
+После авторизации пользователя в шапке доступны два режима работы - "Обычный" и "Администратор". 
+При переключении режимов работы осуществляется перезагрузка страницы. В случае отсутствия прав администратора у пользователя, 
+будет выдано сообщение об отсутствии прав администратора.
+
+### Панель администратора
+На панели администратора есть список пользователей с их информацией. Вы можете удалить пользователя или изменить его статус (администратор/пользователь). 
+Кроме этого, вы можете открыть список файлов пользователя и выполнить любые операции с ними.
 ------------------------
 
