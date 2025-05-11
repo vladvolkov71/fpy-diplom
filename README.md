@@ -35,6 +35,7 @@ $ cd fpy-diplom
 ```
 $ sudo su postgres
 $ psql
+$ \password
 
 # CREATE DATABASE <db_name>;
 # CREATE USER <username> WITH PASSWORD '<passowrd>';
